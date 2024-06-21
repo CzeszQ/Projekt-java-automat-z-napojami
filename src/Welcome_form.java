@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class Welcome_form {
+public class Welcome_form {
 }

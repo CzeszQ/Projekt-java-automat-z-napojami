@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 public class Herbata extends JFrame {
     private JPanel panel1;
     private JButton backMenu;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
+    private JTable table1;
 
     int width = 1150, height = 1000;
 

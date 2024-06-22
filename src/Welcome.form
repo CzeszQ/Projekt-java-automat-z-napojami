@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1284" height="400"/>
+      <xy x="20" y="20" width="1284" height="409"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -27,7 +27,7 @@
             <properties>
               <background color="-16738303"/>
               <font name="Unispace" size="48" style="1"/>
-              <foreground color="-8618905"/>
+              <foreground color="-16777216"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="0"/>
               <text value="WITAMY W AUTOMACIE Z NAPOJAMI"/>
@@ -55,7 +55,7 @@
               </grid>
             </constraints>
             <properties>
-              <background color="-6226125"/>
+              <background color="-4340515"/>
               <font name="Unispace" size="36" style="1"/>
               <foreground color="-459521"/>
               <text value="NACIŚNIJ ABY PRZEJŚĆ DALEJ"/>

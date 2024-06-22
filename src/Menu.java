@@ -13,7 +13,7 @@ public class Menu extends JFrame {
     private JButton wodaButton;
     private JButton herbataButton;
 
-    int width = 1150, height = 1150;
+    int width = 1150, height = 1160;
 
     public Menu(){
         super("Menu");
@@ -51,6 +51,24 @@ public class Menu extends JFrame {
                 dispose();
                 Herbata herbata = new Herbata();
                 herbata.setVisible(true);
+            }
+        });
+        kawaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                Kawa kawa = new Kawa();
+                kawa.setVisible(true);
+            }
+        });
+
+
+        zeroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                Zero napoje_zero = new Zero();
+                napoje_zero.setVisible(true);
             }
         });
     }

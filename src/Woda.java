@@ -7,10 +7,6 @@ public class Woda extends JFrame {
 
     private JPanel panel1;
     private JButton backMenu;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
 
 
     int width = 1150, height = 1000;

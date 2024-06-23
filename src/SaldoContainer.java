@@ -6,7 +6,7 @@ public class SaldoContainer {
         }
 
         public double getSaldo() {
-            return saldo;
+            return Math.round(saldo * 100.0) / 100.0;
         }
 
         public void setSaldo(double saldo) {

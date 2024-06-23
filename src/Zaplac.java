@@ -17,6 +17,10 @@ public class Zaplac extends JFrame {
 
     int width = 1150, height = 1000;
 
+    public double getSaldo() {
+        return saldo;
+    }
+
     public Zaplac() {
 
             super("Wrzucanie monet");
@@ -48,6 +52,10 @@ public class Zaplac extends JFrame {
 
                   saldo += amount;
                 saldoLabel.setText("Saldo: " + amount + " zł");
+                dispose();
+                double saldo = getSaldo();
+                Menu menu = new Menu(saldo);
+                menu.setVisible(true);
             }
         });
 
@@ -56,7 +64,8 @@ public class Zaplac extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                Menu menu = new Menu();
+                double saldo = getSaldo();
+                Menu menu = new Menu(saldo);
                 menu.setVisible(true);
             }
         });

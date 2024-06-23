@@ -45,6 +45,7 @@ public class Menu extends JFrame {
                 menu.setVisible(true);
             }
         });
+
         herbataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +54,7 @@ public class Menu extends JFrame {
                 herbata.setVisible(true);
             }
         });
+
         kawaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,7 +63,6 @@ public class Menu extends JFrame {
                 kawa.setVisible(true);
             }
         });
-
 
         zeroButton.addActionListener(new ActionListener() {
             @Override

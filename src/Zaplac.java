@@ -19,7 +19,7 @@ public class Zaplac extends JFrame {
 
     public Zaplac() {
 
-            super();
+            super("Wrzucanie monet");
             this.setContentPane(this.panel1);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setVisible(true);

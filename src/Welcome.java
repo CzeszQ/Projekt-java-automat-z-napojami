@@ -42,8 +42,8 @@ public class Welcome extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                Admin_panel adminPanel = new Admin_panel();
-                adminPanel.setVisible(true);
+                LoginAdmin login = new LoginAdmin();
+                login.setVisible(true);
             }
         });
     }

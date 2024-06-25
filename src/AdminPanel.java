@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Admin_panel extends JFrame {
+public class AdminPanel extends JFrame {
 
     private JPanel panel1;
     private JTable transakcjeTable;
@@ -37,7 +37,7 @@ public class Admin_panel extends JFrame {
 
     int width = 1150, height = 1000;
 
-    public Admin_panel() {
+    public AdminPanel() {
         super();
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,19 +67,34 @@ public class Admin_panel extends JFrame {
         dodajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = nazwaDodajTextField.getText().trim();
-                String cenaText = cenaDodajTextField.getText().trim();
-                String pojemnoscText = pojemnoscDodajTextField.getText().trim();
-
-                if (name.isEmpty() || cenaText.isEmpty() || pojemnoscText.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Wprowadź nazwę, cenę i pojemność produktu.", "Błąd", JOptionPane.WARNING_MESSAGE);
-                    return; // Przerwij operację jeśli brakuje wymaganych danych
-                }
-
                 try {
+                    String name = nazwaDodajTextField.getText().trim();
+                    String cenaText = cenaDodajTextField.getText().trim();
+                    String pojemnoscText = pojemnoscDodajTextField.getText().trim();
+                    String category = (String) kategoriaDodajComboBox.getSelectedItem(); // Pobieramy wybraną kategorię
+
+                    // Sprawdzamy, czy nazwa produktu zawiera cyfry
+                    if (containsDigit(name)) {
+                        JOptionPane.showMessageDialog(null, "Nazwa produktu nie może zawierać cyfr.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                        return; // Przerwij operację jeśli nazwa zawiera cyfry
+                    }
+
+                    // Sprawdzamy, czy cena składa się wyłącznie z cyfr
+                    if (!isNumeric(cenaText)) {
+                        JOptionPane.showMessageDialog(null, "Cena powinna być liczbą.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                        return; // Przerwij operację jeśli cena nie jest liczbą
+                    }
+
+                    // Sprawdzamy, czy pojemność składa się wyłącznie z cyfr
+                    if (!isNumeric(pojemnoscText)) {
+                        JOptionPane.showMessageDialog(null, "Pojemność powinna być liczbą.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                        return; // Przerwij operację jeśli pojemność nie jest liczbą
+                    }
+
                     double price = Double.parseDouble(cenaText);
                     double volume = Double.parseDouble(pojemnoscText);
-                    String category = (String) kategoriaDodajComboBox.getSelectedItem();
+
+                    // Dodajemy produkt do bazy danych
                     dbManager.addProduct(name, price, volume, category);
                     JOptionPane.showMessageDialog(null, "Produkt dodany pomyślnie");
                     updateTransactionsTable();
@@ -91,7 +106,31 @@ public class Admin_panel extends JFrame {
                     JOptionPane.showMessageDialog(null, "Błąd podczas dodawania produktu: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            private boolean containsDigit(String text) {
+                for (char c : text.toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Funkcja sprawdzająca, czy tekst jest liczbą
+            private boolean isNumeric(String text) {
+                if (text == null || text.isEmpty()) {
+                    return false;
+                }
+                for (char c : text.toCharArray()) {
+                    if (!Character.isDigit(c) && c != '.') {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+
         });
+
 
 
         edytujButton.addActionListener(new ActionListener() {
@@ -102,13 +141,25 @@ public class Admin_panel extends JFrame {
                 String pojemnoscText = pojemnoscEditTextField.getText().trim();
                 String idText = idNapojuTextField.getText().trim();
 
-                // Sprawdzamy, czy podano nazwę, cenę i pojemność
-                if (name.isEmpty() || cenaText.isEmpty() || pojemnoscText.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Wprowadź nazwę, cenę i pojemność produktu.", "Błąd", JOptionPane.WARNING_MESSAGE);
-                    return; // Przerwij operację jeśli brakuje wymaganych danych
+                // Sprawdzamy, czy nazwa produktu zawiera cyfry
+                if (containsDigit(name)) {
+                    JOptionPane.showMessageDialog(null, "Nazwa produktu nie może zawierać cyfr.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                    return; // Przerwij operację jeśli nazwa zawiera cyfry
                 }
 
+                // Sprawdzamy, czy cena składa się wyłącznie z cyfr
+                if (!isNumeric(cenaText)) {
+                    JOptionPane.showMessageDialog(null, "Cena powinna być liczbą.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                    return; // Przerwij operację jeśli cena nie jest liczbą
+                }
 
+                // Sprawdzamy, czy pojemność składa się wyłącznie z cyfr
+                if (!isNumeric(pojemnoscText)) {
+                    JOptionPane.showMessageDialog(null, "Pojemność powinna być liczbą.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                    return; // Przerwij operację jeśli pojemność nie jest liczbą
+                }
+
+                // Inicjalizujemy zmienną na ID produktu, jeśli podano
                 Integer productId = null;
                 if (!idText.isEmpty()) {
                     try {
@@ -123,6 +174,7 @@ public class Admin_panel extends JFrame {
                     double price = Double.parseDouble(cenaText);
                     double volume = Double.parseDouble(pojemnoscText);
 
+                    // Edytujemy produkt w bazie danych
                     dbManager.updateProduct(name, price, volume, productId); // Wywołujemy metodę updateProduct z nazwą produktu i opcjonalnym id
 
                     JOptionPane.showMessageDialog(null, "Produkt zaktualizowany pomyślnie");
@@ -134,6 +186,27 @@ public class Admin_panel extends JFrame {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Błąd podczas aktualizacji produktu: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+            private boolean containsDigit(String text) {
+                for (char c : text.toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Funkcja sprawdzająca, czy tekst jest liczbą
+            private boolean isNumeric(String text) {
+                if (text == null || text.isEmpty()) {
+                    return false;
+                }
+                for (char c : text.toCharArray()) {
+                    if (!Character.isDigit(c) && c != '.') {
+                        return false;
+                    }
+                }
+                return true;
             }
         });
 
@@ -249,6 +322,7 @@ public class Admin_panel extends JFrame {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Błąd podczas zamykania ResultSet: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
+
             }
         }
     }

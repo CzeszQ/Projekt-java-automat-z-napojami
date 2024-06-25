@@ -15,7 +15,7 @@
         private double saldo;
 
 
-        int width = 1150, height = 1160;
+        int width = 1200, height = 1200;
 
         public Menu(double saldo){
             super("Menu");

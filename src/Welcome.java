@@ -7,6 +7,7 @@ public class Welcome extends JFrame {
     private JButton WelcomeButton;
     private JPanel labelpanel;
     private JLabel welcomeLabel;
+    private JButton admin_menuButton;
 
 
     int width = 1150, height = 1000;
@@ -35,6 +36,14 @@ public class Welcome extends JFrame {
                 dispose();
                 Zaplac zaplata = new Zaplac();
                 zaplata.setVisible(true);
+            }
+        });
+        admin_menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                Admin_panel adminPanel = new Admin_panel();
+                adminPanel.setVisible(true);
             }
         });
     }

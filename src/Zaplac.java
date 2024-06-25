@@ -21,12 +21,12 @@ public class Zaplac extends JFrame {
 
     public Zaplac() {
 
-            super("Wrzucanie monet");
-            this.setContentPane(this.panel1);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setVisible(true);
-            this.setSize(width, height);
-
+        super("Wrzucanie monet");
+        this.setContentPane(this.panel1);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
             // Obsługa przycisku "Wrzuć"
         wrzucbutton.addActionListener(new ActionListener() {

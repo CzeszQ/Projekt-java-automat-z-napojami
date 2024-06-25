@@ -41,8 +41,9 @@ public class AdminPanel extends JFrame {
         super();
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
         try {
             dbManager = new DatabaseManager("jdbc:mysql://localhost:3306/drinks", "root", "");

@@ -22,8 +22,9 @@
             this.saldo = saldo;
             this.setContentPane(this.panel1);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setVisible(true);
             this.setSize(width, height);
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
 
             //obrazy
             ImageIcon wodaIcon = new ImageIcon(getClass().getResource("woda_menu2.jpg"));

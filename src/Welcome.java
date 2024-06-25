@@ -9,24 +9,19 @@ public class Welcome extends JFrame {
     private JLabel welcomeLabel;
     private JButton admin_menuButton;
 
-
     int width = 1150, height = 1000;
-
-
 
     public Welcome(){
         super();
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("napoje_welcome_form.png"));
         welcomeLabel.setIcon(imageIcon);
-
-
-
-
 
 
         WelcomeButton.addActionListener(new ActionListener() {
@@ -38,6 +33,7 @@ public class Welcome extends JFrame {
                 zaplata.setVisible(true);
             }
         });
+
         admin_menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

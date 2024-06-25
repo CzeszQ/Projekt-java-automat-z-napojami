@@ -25,6 +25,8 @@ public class Kawa extends JFrame {
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
         // Inicjalizacja listModel
         listModel = new DefaultListModel<>();

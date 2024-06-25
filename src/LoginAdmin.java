@@ -20,10 +20,11 @@ public class LoginAdmin extends JFrame {
         super("Login");
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
-        // Ustawienie akcji przycisku login
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

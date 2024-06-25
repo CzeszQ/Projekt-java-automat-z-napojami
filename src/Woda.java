@@ -26,8 +26,9 @@ public class Woda extends JFrame {
         super("Woda");
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.setSize(width, height);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
         this.saldoContainer = new SaldoContainer(saldo);
         // Inicjalizacja listModel
         listModel = new DefaultListModel<>();

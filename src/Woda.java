@@ -60,7 +60,7 @@ public class Woda extends JFrame {
                     if (saldoContainer.getSaldo() >= selectedNapojCena) {
                         try {
                             // Zapisz transakcję do bazy danych
-                            dbManager.recordTransaction(selectedNapojId, selectedNapojNazwa, selectedNapojCena, "coffee");
+                            dbManager.recordTransaction(selectedNapojId, selectedNapojNazwa, selectedNapojCena, "water");
 
                             saldoContainer.setSaldo(saldoContainer.getSaldo() - selectedNapojCena);
                             JOptionPane.showMessageDialog(null, "Dziękujemy za zakup! Twoja reszta to: " + saldoContainer.getSaldo() + " zł.");

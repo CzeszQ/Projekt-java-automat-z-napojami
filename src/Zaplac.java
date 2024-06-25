@@ -11,8 +11,6 @@ public class Zaplac extends JFrame {
     private JTextField textField3;
     private JCheckBox a1ZlCheckBox;
     private JButton wrzucbutton;
-    private JButton menubutton;
-    private JLabel saldoLabel;
     private double saldo = 0.0;
 
     int width = 1150, height = 1000;
@@ -51,7 +49,6 @@ public class Zaplac extends JFrame {
                 }
 
                   saldo += amount;
-                saldoLabel.setText("Saldo: " + amount + " zł");
                 dispose();
                 double saldo = getSaldo();
                 Menu menu = new Menu(saldo);
@@ -60,15 +57,6 @@ public class Zaplac extends JFrame {
         });
 
 
-        menubutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                double saldo = getSaldo();
-                Menu menu = new Menu(saldo);
-                menu.setVisible(true);
-            }
-        });
 
     }
 

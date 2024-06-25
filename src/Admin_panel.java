@@ -31,6 +31,7 @@ public class Admin_panel extends JFrame {
     private JTextField cenaEditTextField;
     private JLabel id_napoju;
     private JTextField idNapojuTextField;
+    private JButton exitButton;
 
     private DatabaseManager dbManager;
 
@@ -50,8 +51,13 @@ public class Admin_panel extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        //dodaj combobox
         kategoriaDodajComboBox.addItem("tea");
         kategoriaDodajComboBox.addItem("water");
         kategoriaDodajComboBox.addItem("zero_drink");
@@ -61,34 +67,61 @@ public class Admin_panel extends JFrame {
         dodajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String name = nazwaDodajTextField.getText().trim();
+                String cenaText = cenaDodajTextField.getText().trim();
+                String pojemnoscText = pojemnoscDodajTextField.getText().trim();
+
+                if (name.isEmpty() || cenaText.isEmpty() || pojemnoscText.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Wprowadź nazwę, cenę i pojemność produktu.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                    return; // Przerwij operację jeśli brakuje wymaganych danych
+                }
+
                 try {
-                    String name = nazwaDodajTextField.getText();
-                    double price = Double.parseDouble(cenaDodajTextField.getText());
-                    double volume = Double.parseDouble(pojemnoscDodajTextField.getText());
-                    String category = (String) kategoriaDodajComboBox.getSelectedItem(); // Pobieramy wybraną kategorię
+                    double price = Double.parseDouble(cenaText);
+                    double volume = Double.parseDouble(pojemnoscText);
+                    String category = (String) kategoriaDodajComboBox.getSelectedItem();
                     dbManager.addProduct(name, price, volume, category);
                     JOptionPane.showMessageDialog(null, "Produkt dodany pomyślnie");
                     updateTransactionsTable();
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Błąd podczas parsowania danych numerycznych.", "Błąd", JOptionPane.ERROR_MESSAGE);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Błąd podczas dodawania produktu.");
+                    JOptionPane.showMessageDialog(null, "Błąd podczas dodawania produktu: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
+
         edytujButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    String name = IdEditTextField.getText(); // Pobieramy nazwę produktu z pola IdEditTextField
-                    double price = Double.parseDouble(cenaEditTextField.getText());
-                    double volume = Double.parseDouble(pojemnoscEditTextField.getText());
+                String name = IdEditTextField.getText().trim();
+                String cenaText = cenaEditTextField.getText().trim();
+                String pojemnoscText = pojemnoscEditTextField.getText().trim();
+                String idText = idNapojuTextField.getText().trim();
 
-                    Integer productId = null; // Domyślnie brak id (null)
-                    String idText = idNapojuTextField.getText().trim();
-                    if (!idText.isEmpty()) {
-                        productId = Integer.parseInt(idText); // Jeśli użytkownik podał id, użyj go
+                // Sprawdzamy, czy podano nazwę, cenę i pojemność
+                if (name.isEmpty() || cenaText.isEmpty() || pojemnoscText.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Wprowadź nazwę, cenę i pojemność produktu.", "Błąd", JOptionPane.WARNING_MESSAGE);
+                    return; // Przerwij operację jeśli brakuje wymaganych danych
+                }
+
+
+                Integer productId = null;
+                if (!idText.isEmpty()) {
+                    try {
+                        productId = Integer.parseInt(idText);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Podano niepoprawny format ID produktu.", "Błąd", JOptionPane.ERROR_MESSAGE);
+                        return; // Przerwij operację w przypadku niepoprawnego formatu ID
                     }
+                }
+
+                try {
+                    double price = Double.parseDouble(cenaText);
+                    double volume = Double.parseDouble(pojemnoscText);
 
                     dbManager.updateProduct(name, price, volume, productId); // Wywołujemy metodę updateProduct z nazwą produktu i opcjonalnym id
 
@@ -96,7 +129,7 @@ public class Admin_panel extends JFrame {
                     updateTransactionsTable();
                 } catch (NumberFormatException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Błąd podczas parsowania danych numerycznych.");
+                    JOptionPane.showMessageDialog(null, "Błąd podczas parsowania danych numerycznych.", "Błąd", JOptionPane.ERROR_MESSAGE);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Błąd podczas aktualizacji produktu: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -105,18 +138,17 @@ public class Admin_panel extends JFrame {
         });
 
 
+
         usunButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedProduct = usunComboBox.getSelectedItem().toString();
                 if (selectedProduct != null && !selectedProduct.isEmpty()) {
                     try {
-
                         int productId = Integer.parseInt(selectedProduct.split(" - ")[0]);
                         dbManager.deleteProduct(productId);
                         JOptionPane.showMessageDialog(null, "Produkt został pomyślnie usunięty.");
                         refreshComboBox();
-
                     } catch (NumberFormatException ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Błąd przetwarzania id produktu: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -129,6 +161,8 @@ public class Admin_panel extends JFrame {
                 }
             }
         });
+
+
     }
     private void refreshComboBox() {
         usunComboBox.removeAllItems();
@@ -195,19 +229,14 @@ public class Admin_panel extends JFrame {
             }
 
             while (rs.next()) {
-                // Przykład dla obiektu Product
+
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
                 double volume = rs.getDouble("volume");
-                //Product product = new Product(id, name, price, volume); // Przyjmuję, że masz klasę Product
 
-                // Dodajemy cały obiekt Product do ComboBox
-                //usunComboBox.addItem(product);
-
-                // Możesz także dodać tekstową reprezentację całego rekordu
-                 String fullRecord = id + " - " + name + " - " + price + " zł - " + volume + " L";
-                 usunComboBox.addItem(fullRecord);
+                String fullRecord = id + " - " + name + " - " + price + " zł - " + volume + " L";
+                usunComboBox.addItem(fullRecord);
             }
 
         } catch (Exception e) {
